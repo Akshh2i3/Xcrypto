@@ -16,29 +16,41 @@ const CoinDetails = ({ id }) => {
     const [chartArray, setChartArray] = useState([]);
 
     const currencySymbol = (currency === 'inr' ? '₹' : currency === 'eur' ? '€' : '$');
-    const btns = ['24h', '7d', '14d', '30d', '60d', '200d', '365d', 'max']
+    const btns = ['24h', '7d', '14d', '30d', '60d']
 
     useEffect(() => {
         const fetchCoinDetails = async () => {
             try {
-                console.log(id)
+                // console.log(id)
                 const { data } = await axios.get(`${server}/coins/${id}`)
-                const { data: chartData } = await axios.get(`${server}/coins/${id}/market_chart?vs_currency=${currency}&days=${days}`)
 
-                console.log(data)
-                console.log(chartData)
+                // console.log(data)
                 setCoin(data)
-                setChartArray(chartData.prices)
-
                 setLoading(false)
             } catch (error) {
                 setError(true)
                 setLoading(false)
-                console.log(error)
+                // console.log(error)
             }
         }
         fetchCoinDetails();
-    }, [id, currency, days])
+    }, [id])
+
+    // reduced API calls
+    useEffect(() => {
+        const fetchCoinDetails = async () => {
+            try {
+                const { data: chartData } = await axios.get(`${server}/coins/${id}/market_chart?vs_currency=${currency}&days=${days}`)
+
+                setChartArray(chartData.prices)
+                setLoading(false)
+            } catch (error) {
+                setError(true)
+                setLoading(false)
+            }
+        }
+        fetchCoinDetails();
+    }, [currency, days])
 
     if (error) return <Message msg='Error while fetching CoinDetails' />
 
@@ -67,13 +79,8 @@ const CoinDetails = ({ id }) => {
         )
     }
 
-    const switchChartDays = (val) => {
-        setDays(val)
-        // setLoading(true)
-    }
-
     return (
-        <div className='max-w-4xl min-h-[38vw] mx-auto mt-10 '>
+        <div className='max-w-4xl min-h-[38vw] mx-auto mt-10 p-5'>
             {
                 loading ? <Loader />
                     : <>
@@ -87,7 +94,7 @@ const CoinDetails = ({ id }) => {
                         <div className='w-full min-h-[38vw] border-2 border-black rounded-xl text-3xl px-10 pt-4'>
                             <div className='flex flex-row gap-10 items-center justify-between mb-10'>
                                 <div>
-                                    <span className='p-1 mr-2 w-fit bg-black text-white rounded-md text-xl border-2 border-black'>#{coin.market_cap_rank}</span>
+                                    <span className='p-1 mr-2 w-fit bg-black text-white rounded-md text-xl border-2 border-black'># {coin.market_cap_rank}</span>
                                     <span className='border-b-2 border-black'>
                                         {coin.name}
                                     </span>
@@ -145,7 +152,7 @@ const CoinDetails = ({ id }) => {
                             <div className='flex gap-4 pb-5 pt-10 '>
                                 {
                                     btns.map((i) =>
-                                        <Button key={i} onClick={() => switchChartDays(i)}>{i}</Button>
+                                        <Button key={i} onClick={() => setDays(i)}>{i}</Button>
                                     )
                                 }
                             </div>

@@ -10,7 +10,6 @@ import {
     Tooltip,
     Legend,
 } from 'chart.js'
-import { background } from '@chakra-ui/react'
 
 ChartJS.register(
     CategoryScale,
