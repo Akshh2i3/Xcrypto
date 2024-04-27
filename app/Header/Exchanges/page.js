@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { server } from '@/app/layout'
 import ExchangeCard from '@/components/ExchangeCard'
-import Message from '@/components/Message'
+import ErrorComp from '@/components/ErrorComp'
 import Loader from '@/components/Loader'
 
 
@@ -27,7 +27,7 @@ const Exchanges = () => {
         fetchExchanges();
     }, [])
 
-    if (error) return <Message msg='Error while fetching exchanges data' />
+    if (error) return <ErrorComp />
 
     return (
         <div>

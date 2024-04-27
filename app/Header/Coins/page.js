@@ -3,7 +3,7 @@ import React, { Fragment, useEffect, useState } from 'react'
 import axios from 'axios'
 import { server } from '@/app/layout'
 import CoinCard from '@/components/CoinCard'
-import Message from '@/components/Message'
+import ErrorComp from '@/components/ErrorComp'
 import { Button, Radio, RadioGroup } from '@chakra-ui/react'
 import Loader from '@/components/Loader'
 
@@ -42,7 +42,7 @@ const Coins = () => {
         fetchCoins();
     }, [currency, page])
 
-    if (error) return <Message msg='Error while fetching coins' />
+    if (error) return <ErrorComp />
 
     return (
         <div>
