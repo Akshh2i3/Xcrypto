@@ -1,6 +1,6 @@
 import "./globals.css";
 import Footer from "@/components/Footer";
-import Header from "./Header/Header";
+import Header from "@/components/Header";
 import { ChakraProvider } from "@chakra-ui/react";
 
 export default function RootLayout({ children }) {

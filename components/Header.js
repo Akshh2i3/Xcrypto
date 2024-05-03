@@ -10,10 +10,10 @@ const Header = () => {
         <Link href='/'>Home</Link>
       </Button>
       <Button>
-        <Link href='/Header/Coins'>Coins</Link>
+        <Link href='/Coins'>Coins</Link>
       </Button>
       <Button>
-        <Link href='/Header/Exchanges'>Exchanges</Link>
+        <Link href='/Exchanges'>Exchanges</Link>
       </Button>
     </div>
   )
